@@ -21,26 +21,23 @@ function App() {
       if (sort === "content") return a.content.localeCompare(b.content);
     });
   
-  const TodoItem = (props) => {
-    const editedText = useState([]);
-    const [isEditClicked, setIsEditClicked] = useState(false);
-    const [updatedText, setUpdatedText] = useState("");
+  const [editText, setEditText] = useState("");
 
-    const submitEditedContent = () => {
-      if (updatedText === '') {
-        setIsEditClicked(false);
-        return;
-      }
-      props.submitEditedContent(updatedText, props.todo.id);
-      setUpdatedText('');
-      setIsEditClicked(false);
-    }
+  const edit = (id) => {
+    const newTodos = [...todos];
+    const idx = newTodos.findIndex((todo) => todo.id === id);
+    newTodos[idx].isEdit = !newTodos[idx].isEdit;
+    setTodos(newTodos);
+  };
 
-    const openEdit = () => {
-      setIsEditClicked(true);
-      editedText.current.focus();
-    }
-  }
+  const editTodo = (id) => {
+    const newTodos = [...todos];
+    const idx = newTodos.findIndex((todo) => todo.id === id);
+    newTodos[idx].content = editText;
+    newTodos[idx].isEdit = false;
+    setTodos(newTodos);
+    setEditText("");
+  };
 
   return (
     <div className="App">
@@ -93,7 +90,7 @@ function App() {
               content: inputValue,
               isDone: false,
               createdAt: Date.now(),
-              edit: false
+              isEdit: false
             };
             setTodos([...todos, newTodo]);
             setInputValue("");
@@ -126,13 +123,20 @@ function App() {
             >
               DEL
             </button>
-            <button
-              onClick={() => {
-                submitEditedContent
-                
-              }}>
+            <div key={todo.id}>
+              {todo.isEdit ? (
+                <input
+                  onSubmitEditing = {() => {
+                    editTodo(todo.id);
+                  }}
+                  onChangeText={setEditText}
+                  value={editText}
+                />
+              ) : todo}
+            <button>
               edit
             </button>
+            </div>
           </div>
         ))}
       </div>
