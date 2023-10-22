@@ -21,6 +21,8 @@ function App() {
       if (sort === "content") return a.content.localeCompare(b.content);
     });
 
+  const [editText, setEditText] = useState("");
+
   return (
     <div className="App">
       <h1>TODO LIST</h1>
@@ -72,6 +74,7 @@ function App() {
               content: inputValue,
               isDone: false,
               createdAt: Date.now(),
+              edit: false
             };
             setTodos([...todos, newTodo]);
             setInputValue("");
@@ -104,7 +107,15 @@ function App() {
             >
               DEL
             </button>
-            <button>
+            <button
+              value={inputValue}
+              onClick={(e) => {
+                const editTodos = todos.map((todo, idx) => 
+                  idx === index ? { ...todo, edit: e.target.value } : todo
+                );
+                setTodos(editTodos);
+              }}
+            >
               edit
             </button>
           </div>
