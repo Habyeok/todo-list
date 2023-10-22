@@ -20,8 +20,18 @@ function App() {
       if (sort === "createdAt") return b.createdAt - a.createdAt;
       if (sort === "content") return a.content.localeCompare(b.content);
     });
-
+  
   const [editText, setEditText] = useState("");
+  const editBtn = (id) => {
+    setEditText(todos.find((todo) => todo.id === id).content);
+    setTodos(
+      todos.map((todo) => 
+        todo.id === id ? { ...todo, edit: !todo.edit } : todo
+      )
+    );
+  };
+
+  
 
   return (
     <div className="App">
@@ -108,22 +118,9 @@ function App() {
               DEL
             </button>
             <button
-              value={inputValue}
-              onClick={(e) => {
-                const editTodos = (editText, id) => {
-                  setTodos(todos.map(todo => {
-                    if (todo.id === id) {
-                      return {
-                        ...todo,
-                        text: editText
-                      };
-                    }
-                    return todo;
-                  }))
-                }
-              }
-            } 
-            >
+              onClick={() => {
+                editBtn(todo.id)
+              }}>
               edit
             </button>
           </div>
