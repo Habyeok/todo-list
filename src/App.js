@@ -110,11 +110,19 @@ function App() {
             <button
               value={inputValue}
               onClick={(e) => {
-                const editTodos = todos.map((todo, idx) => 
-                  idx === index ? { ...todo, edit: e.target.value } : todo
-                );
-                setTodos(editTodos);
-              }}
+                const editTodos = (editText, id) => {
+                  setTodos(todos.map(todo => {
+                    if (todo.id === id) {
+                      return {
+                        ...todo,
+                        text: editText
+                      };
+                    }
+                    return todo;
+                  }))
+                }
+              }
+            } 
             >
               edit
             </button>
