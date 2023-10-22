@@ -104,6 +104,9 @@ function App() {
             >
               DEL
             </button>
+            <button>
+              edit
+            </button>
           </div>
         ))}
       </div>
