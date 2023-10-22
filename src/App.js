@@ -21,17 +21,26 @@ function App() {
       if (sort === "content") return a.content.localeCompare(b.content);
     });
   
-  const [editText, setEditText] = useState("");
-  const editBtn = (id) => {
-    setEditText(todos.find((todo) => todo.id === id).content);
-    setTodos(
-      todos.map((todo) => 
-        todo.id === id ? { ...todo, edit: !todo.edit } : todo
-      )
-    );
-  };
+  const TodoItem = (props) => {
+    const editedText = useState([]);
+    const [isEditClicked, setIsEditClicked] = useState(false);
+    const [updatedText, setUpdatedText] = useState("");
 
-  
+    const submitEditedContent = () => {
+      if (updatedText === '') {
+        setIsEditClicked(false);
+        return;
+      }
+      props.submitEditedContent(updatedText, props.todo.id);
+      setUpdatedText('');
+      setIsEditClicked(false);
+    }
+
+    const openEdit = () => {
+      setIsEditClicked(true);
+      editedText.current.focus();
+    }
+  }
 
   return (
     <div className="App">
@@ -119,7 +128,8 @@ function App() {
             </button>
             <button
               onClick={() => {
-                editBtn(todo.id)
+                submitEditedContent
+                
               }}>
               edit
             </button>
