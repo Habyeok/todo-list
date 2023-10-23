@@ -23,8 +23,10 @@ export const TodoItem = ({
   };
 
   return (
-    <div key={todo.id}>
+    <div className="todo-item-container" key={todo.id}>
+     <div className="item"> 
       <input
+        className="check-box"
         type="checkbox"
         checked={todo.isDone}
         onChange={(e) => {
@@ -41,6 +43,7 @@ export const TodoItem = ({
           {todo.content}
         </span>
       )}
+     <div className="button-container">
       <button
         onClick={() => {
           onTodoListDelete(todo.id);
@@ -63,6 +66,8 @@ export const TodoItem = ({
       >
         UPDATE
       </button>
+     </div>
+     </div>
     </div>
   );
 };
