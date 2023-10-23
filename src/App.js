@@ -69,6 +69,7 @@ function App() {
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
+          disabled={isUpdateMode}
         />
         <button
           onClick={() => {
@@ -81,6 +82,7 @@ function App() {
             setTodos([...todos, newTodo]);
             setInputValue("");
           }}
+          disabled={isUpdateMode}
         >
           {"ADD"}
         </button>
