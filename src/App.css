@@ -86,6 +86,7 @@
 
 .todo-list-container {
   height: full;
+  margin-top: 20px;
 }
 
 .todo-item-container {
